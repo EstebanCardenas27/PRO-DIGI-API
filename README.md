@@ -1,4 +1,4 @@
-📦 DigiAPI App
+### 📦 DigiAPI App
 Una aplicación que consume la Digi-API para visualizar datos de Digimon en una interfaz interactiva. From: https://digi-api.com/
 
 🚀 Tecnologías
@@ -16,7 +16,7 @@ Hooks custom (e.g. useMask)
 
 Animaciones CSS
 
-🎨 Funcionalidad implementada
+### 🎨 Funcionalidad implementada
 ✅ Layout dinámico
 
 Cambia el fondo entre desktop y mobile aleatoriamente.
