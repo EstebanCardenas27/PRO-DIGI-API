@@ -1,0 +1,104 @@
+import { useState, useEffect } from "preact/hooks";
+
+import { Filter } from "@components/Filter/Filter";
+import { InputSearch } from "@components/Inputs/InputSearch";
+import { CardDigimon } from "@components/Card/CardDigimon";
+import { CardRotating } from "@components/Card/CardRotating";
+
+import { Cards } from "@assets/Icons/Card";
+
+import { getRandom } from "@utils/getRandom";
+
+import { getDigimon, getList } from "@services/digimonApi";
+
+import type { IDigimon } from "@typings/digimon";
+import type { Props as PropsCard } from "@typings/card";
+
+export const Home = () => {
+    const [list, setList] = useState<PropsCard[]>([]);
+    const [digimon, setDigimon] = useState<IDigimon | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleSearch = async (search : string = "") => {
+        if (!search.trim()) return;
+
+        setLoading(true);
+
+        try {
+            const result = await getList({
+                name: search.trim(),
+                page: 0,
+            });
+            setList(result?.content ?? []);
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleOnClick = async (id: string = "") => {
+        try {
+            const result = await getDigimon(id);
+            setDigimon(result);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleOnRefresh = () => {
+        getListDigimon();
+    };
+
+    const getListDigimon = async () => {
+        setLoading(true);
+        const list = await getList();
+        setList(list?.content);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        getListDigimon();
+        handleOnClick(Math.floor(getRandom(1, 1488)).toString());
+    }, []);
+
+    return (
+        <>
+            <div className="w-full flex flex-col gap-4">
+                <section className="relative w-full md:pt-30 pt-24 text-white text-center px-6">                    
+                    <div className="flex flex-wrap w-full gap-4">
+                        <InputSearch
+                            onChange={handleSearch}
+                            classNameContent="w-[calc(100%-3.5rem)]"
+                        />
+                        <button
+                            onClick={handleOnRefresh}                            
+                            className="cursor-pointer w-[1.85rem] h-[1.85rem] md:w-10 md:h-10 flex justify-center items-center text-lg text-bold bg-gradient-to-r backdrop-blur-lg text-white rounded-full transition border hover:text-teal-400"
+                        >
+                            <Cards/>
+                        </button>
+                        <Filter />
+                    </div>
+                </section>
+
+                <section className="flex flex-1 overflow-hidden">
+                    {loading ? (
+                      <div className="flex items-center justify-center w-full h-full">
+                        <div className="w-16 h-16 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+                      </div>
+                    ) : (
+                      <CardRotating list={list} onClick={handleOnClick} />
+                    )}
+                </section>
+            </div>
+            <section className="md:w-1/2 w-full p-4 py-28 hidden lg:flex flex-wrap justify-center items-center">                
+                <CardDigimon
+                    {...digimon}
+                    id={digimon?.id ?? 0}
+                    name={digimon?.name ?? "---"}
+                    image={digimon?.images?.[0]?.href as string}
+                />
+            </section>
+        </>
+    );
+};
