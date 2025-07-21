@@ -25,7 +25,7 @@ export const CardRotating = ({ list = [], onClick }: Props) => {
               style={{
                 "--index": index,
                 "--color-card": "252, 142, 239",
-                backgroundImage: `url("${import.meta.env.BASE_URL}/Digimons/s${index + 1}.webp")`
+                backgroundImage: `url("${import.meta.env.BASE_URL}Digimons/s${index + 1}.webp")`
               }}
               onClick={() => onClick(`${id}`)}
             >
