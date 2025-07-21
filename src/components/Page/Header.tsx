@@ -4,10 +4,10 @@ export const Header = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [index, setIndex] = useState(0);
 
-  const songs = [
-    "/Sounds/digivice.mp3",
-    "/Sounds/op.mp3",
-    "/Sounds/evolution.mp3",
+   const songs = [
+    `${import.meta.env.BASE_URL}/Sounds/digivice.mp3`,
+    `${import.meta.env.BASE_URL}/Sounds/op.mp3`,
+    `${import.meta.env.BASE_URL}/Sounds/evolution.mp3`,
     null,
   ];
 
@@ -29,9 +29,9 @@ export const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg p-4 flex justify-center text-2xl font-bold">
         <img
-            src="/public/Digimons/digivice.webp"
+            src={`${import.meta.env.BASE_URL}/Digimons/digivice.webp`}
             alt="Logo Digivice"
-            className="h-12 md:ml-34 items-start"
+            className="h-12 md:ml-34 items-start cursor-pointer"
             onClick={handleClick}
         />
         <h1 className="flex-1 hidden md:block text-gray-400 text-4xl font-bold mb-0 text-center md:pr-34">

@@ -20,7 +20,7 @@ export const DigimonMusic = () => {
   return (
     <audio
       ref={audioRef}
-      src="/Sounds/digivice.mp3"
+      src={`${import.meta.env.BASE_URL}/Sounds/digivice.mp3`}
       loop
       hidden
     />

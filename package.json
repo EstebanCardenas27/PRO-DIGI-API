@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@imgly/background-removal": "^1.6.0",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.10.0",
+    "path": "^0.12.7",
     "preact": "^10.26.9",
     "tailwindcss": "^4.1.11",
     "tsconfig-paths": "^4.2.0",
